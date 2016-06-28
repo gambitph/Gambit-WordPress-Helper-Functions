@@ -51,3 +51,42 @@ if ( ! function_exists( 'gambit_unset_is_excerpt' ) ) {
 		return $text;
 	}
 }
+
+
+if ( ! function_exists( 'gambit_get_all_post_types' ) ) {
+	/**
+	 * Gets all post type slugs and their display names.
+	 *
+	 * @return array An associative array of all post type slugs and post type names.
+	 */
+	function gambit_get_all_post_types() {
+		$args = array(
+		   'public' => true,
+		   '_builtin' => true,
+		);
+		$post_types = get_post_types( $args, 'objects' );
+
+		$args = array(
+		   'public' => true,
+		   '_builtin' => false,
+		);
+		$post_types2 = get_post_types( $args, 'objects' );
+
+		$post_types = array_merge( $post_types, $post_types2 );
+
+		$ret = array();
+		foreach ( $post_types as $post_type ) {
+
+			$slugname = $post_type->name;
+
+			$name = $post_type->name;
+			if ( ! empty( $post_type->labels->singular_name ) ) {
+				$name = $post_type->labels->singular_name . ' (' . $slugname . ')';
+			}
+
+			$ret[ $slugname ] = $name;
+		}
+
+		return $ret;
+	}
+}
