@@ -19,4 +19,6 @@ Use it:
 
 # Helper functions
 
-* `gambit_is_doing_excerpt` - Returns `true` if currently creating an excerpt.
+| Helper Function | Returns | Description |
+| --- | :---: | --- |
+| `gambit_is_doing_excerpt()` | `bool` | Returns `true` if currently creating an excerpt. |
