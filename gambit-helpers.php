@@ -106,3 +106,35 @@ if ( ! function_exists( 'gambit_get_current_url' ) ) {
 		return trailingslashit( get_permalink( get_the_ID() ) );
 	}
 }
+
+
+if ( ! function_exists( 'gambit_abbreviate_number' ) ) {
+
+	/**
+	 * Abbreviates a number with a unit. E.g. Converts 1100 to 1.1K
+	 *
+	 * @see http://stackoverflow.com/questions/13049851/php-number-abbreviator
+	 *
+	 * @param int $value The number to abbreviate.
+	 *
+	 * @return string The abbreviated number.
+	 */
+	function gambit_abbreviate_number( $value ) {
+
+		$abbreviations = array(
+			12 => 'T',
+			9 => 'B',
+			6 => 'M',
+			3 => 'K',
+			0 => '',
+		);
+
+		foreach ( $abbreviations as $exponent => $abbreviation ) {
+			if ( $value >= pow( 10, $exponent ) ) {
+				return round( floatval( $value / pow( 10, $exponent ) ), 1 ).$abbreviation;
+			}
+		}
+
+		return $value;
+	}
+}

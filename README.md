@@ -24,3 +24,4 @@ Use it:
 | `gambit_is_doing_excerpt()` | `boolean` | Returns `true` if currently creating an excerpt. |
 | `gambit_get_all_post_types()` | `array` | Gets all the post types currently registered. Returns an associative array of all post type slugs and post type names. |
 | `gambit_get_current_url()` | `string` | Gets the current URL. |
+| `gambit_abbreviate_number( $value )` | `string` | Abbreviates a number with a unit. E.g. Converts 1100 to 1.1K |
