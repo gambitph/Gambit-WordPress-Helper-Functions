@@ -22,4 +22,5 @@ Use it:
 | Helper Function | Returns | Description |
 | --- | :---: | --- |
 | `gambit_is_doing_excerpt()` | `boolean` | Returns `true` if currently creating an excerpt. |
-| `gambit_get_all_post_types()` | `array` | Returns an associative array of all post type slugs and post type names. |
+| `gambit_get_all_post_types()` | `array` | Gets all the post types currently registered. Returns an associative array of all post type slugs and post type names. |
+| `gambit_get_current_url()` | `string` | Gets the current URL. |

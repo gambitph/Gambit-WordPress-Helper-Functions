@@ -90,3 +90,19 @@ if ( ! function_exists( 'gambit_get_all_post_types' ) ) {
 		return $ret;
 	}
 }
+
+
+if ( ! function_exists( 'gambit_get_current_url' ) ) {
+
+	/**
+	 * Gets the current URL.
+	 *
+	 * @return string The current URL.
+	 */
+	function gambit_get_current_url() {
+		if ( ! is_main_query() && ! is_singular() ) {
+			return trailingslashit( home_url( add_query_arg( null, null ) ) );
+		}
+		return trailingslashit( get_permalink( get_the_ID() ) );
+	}
+}
