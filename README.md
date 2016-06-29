@@ -27,6 +27,7 @@ Use it:
 | `gambit_get_all_terms_of_post_type($post_type)` | `array` | Gets all the taxonomies associated with a post type. Returns an array of all taxonomy ids. |
 | `gambit_get_current_url()` | `string` | Gets the current URL. |
 | `gambit_abbreviate_number($value)` | `string` | Abbreviates a number with a unit. E.g. Converts 1100 to 1.1K |
-| `gambit_hex_to_rgb($hex)` | `array` | Converts a hex color `#ffffff` or `#fff` to rgb `array( 255, 255, 255 )` |
+| `gambit_hex_to_rgb($hex)` | `array` | Converts a hex color `#ffffff` or `#fff` to rgb `array(255,255,255)` |
+| `gambit_hex_to_rgba($hex, $opacity=1.0)` | `string` | Converts a hex color `#ffffff` or `#fff` and an opacity value `1.0` to an rgba string `rgba(255,255,255,1.0)` |
 | `gambit_get_ip()` | `string` | Gets the current IP address of the visitor |
 | `gambit_is_spam($content)` | `boolean` | Checks whether a given content is spam using Akismet's system. Returns `true` if Akismet tagged the given content as spam, `false` otherwise. |

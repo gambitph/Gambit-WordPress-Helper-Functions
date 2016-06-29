@@ -145,7 +145,7 @@ if ( ! function_exists( 'gambit_hex_to_rgb' ) ) {
 	/**
 	 * Converts a hex color to rgb values.
 	 *
-	 * @param string $hex The hexadecimal color valuess.
+	 * @param string $hex The hexadecimal color value.
 	 *
 	 * @return array The individual r, g, b colors
 	 */
@@ -163,6 +163,23 @@ if ( ! function_exists( 'gambit_hex_to_rgb' ) ) {
 		}
 
 		return array( $r, $g, $b );
+	}
+}
+
+
+if ( ! function_exists( 'gambit_hex_to_rgba' ) ) {
+
+	/**
+	 * Converts a hex color and opacity float into an rgba string, usable in CSS.
+	 *
+	 * @param string $hex The hexadecimal color value.
+	 * @param float  $opacity The opacity value.
+	 *
+	 * @return string The rgba color string
+	 */
+	function gambit_hex_to_rgba( $hex, $opacity = 1.0 ) {
+		$rgb = gambit_hex_to_rgb( $hex );
+		return 'rgba(' . $hex[0] . ',' . $hex[1] . ',' . $hex[2] . ',' . $opacity . ')';
 	}
 }
 
