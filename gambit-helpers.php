@@ -240,3 +240,55 @@ if ( ! function_exists( 'gambit_get_all_taxonomies' ) ) {
 		return $ret;
 	}
 }
+
+
+if ( ! function_exists( 'gambit_get_all_terms_of_post_type' ) ) {
+
+	/**
+	 * Get all term IDs of a post type.
+	 *
+	 * @param string $post_type The post type to get the terms of.
+	 *
+	 * @return array An array of term IDs.
+	 */
+	function gambit_get_all_terms_of_post_type( $post_type ) {
+		$ret = array();
+
+		$taxonomies = get_object_taxonomies( $post_type );
+		foreach ( $taxonomies as $taxonomy ) {
+			$taxonomy_object = get_taxonomy( $taxonomy );
+			$taxonomy_name = $taxonomy_object->label;
+			if ( ! empty( $taxonomy_object->labels->singular_name ) ) {
+				$taxonomy_name = $taxonomy_object->labels->singular_name;
+			}
+
+			$terms = get_terms( $taxonomy, array(
+				'parent' => 0,
+				'hide_empty' => false,
+			) );
+
+			if ( is_wp_error( $terms ) || empty( $terms ) ) {
+				continue;
+			}
+
+			foreach ( $terms as $term ) {
+				$ret[] = $term->term_id;
+			}
+
+			// Child terms aren't outputted by get_terms, we'll need to get the child terms individually.
+			foreach ( $terms as $term ) {
+				$term_children = get_term_children( $term->term_id, $taxonomy );
+
+				if ( is_wp_error( $term_children ) || empty( $term_children ) ) {
+					continue;
+				}
+
+				foreach ( $term_children as $term_child_id ) {
+					$ret[] = $term_child_id;
+				}
+			}
+		}
+
+		return $ret;
+	}
+}
