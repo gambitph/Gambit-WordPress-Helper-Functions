@@ -26,3 +26,4 @@ Use it:
 | `gambit_get_current_url()` | `string` | Gets the current URL. |
 | `gambit_abbreviate_number($value)` | `string` | Abbreviates a number with a unit. E.g. Converts 1100 to 1.1K |
 | `gambit_hex_to_rgb($hex)` | `array` | Converts a hex color `#ffffff` or `#fff` to rgb `array( 255, 255, 255 )` |
+| `gambit_get_ip()` | `string` | Gets the current IP address of the visitor |

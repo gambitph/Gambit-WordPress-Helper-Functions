@@ -165,3 +165,21 @@ if ( ! function_exists( 'gambit_hex_to_rgb' ) ) {
 		return array( $r, $g, $b );
 	}
 }
+
+
+if ( ! function_exists( 'gambit_get_ip' ) ) {
+
+	/**
+	 * Gets the IP & if possible the forwarded proxy name. To be used for identifying non-logged in ratings and to secure against duplicate ratings.
+	 *
+	 * @return string The IP of the visitor.
+	 */
+	function gambit_get_ip() {
+		// @codingStandardsIgnoreLine
+		$unique_ip = empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ? '' : $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$unique_ip .= empty( $unique_ip ) ? '' : '-';
+		// @codingStandardsIgnoreLine
+		$unique_ip .= empty( $_SERVER['REMOTE_ADDR'] ) ? '' : $_SERVER['REMOTE_ADDR'];
+		return $unique_ip;
+	}
+}
