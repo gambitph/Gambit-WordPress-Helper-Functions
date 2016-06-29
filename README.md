@@ -21,7 +21,7 @@ Use it:
 
 | Helper Function | Returns | Description |
 | --- | :---: | --- |
-| `gambit_is_doing_excerpt()` | `boolean` | Returns `true` if currently creating an excerpt. |
+| `gambit_is_doing_excerpt()` | `boolean` | Returns `true` if currently creating an excerpt. Useful while inside `the_content` filters. |
 | `gambit_get_all_post_types()` | `array` | Gets all the post types currently registered. Returns an associative array of all post type slugs and post type names. |
 | `gambit_get_all_taxonomies()` | `array` | Gets all the taxonomies currently in the site. Returns an associative array of all taxonomy ids and post type names. |
 | `gambit_get_all_terms_of_post_type($post_type)` | `array` | Gets all the taxonomies associated with a post type. Returns an array of all taxonomy ids. |
