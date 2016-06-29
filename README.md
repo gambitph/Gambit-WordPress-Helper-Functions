@@ -29,3 +29,4 @@ Use it:
 | `gambit_abbreviate_number($value)` | `string` | Abbreviates a number with a unit. E.g. Converts 1100 to 1.1K |
 | `gambit_hex_to_rgb($hex)` | `array` | Converts a hex color `#ffffff` or `#fff` to rgb `array( 255, 255, 255 )` |
 | `gambit_get_ip()` | `string` | Gets the current IP address of the visitor |
+| `gambit_is_spam($content)` | `boolean` | Checks whether a given content is spam using Akismet's system. Returns `true` if Akismet tagged the given content as spam, `false` otherwise. |

@@ -292,3 +292,64 @@ if ( ! function_exists( 'gambit_get_all_terms_of_post_type' ) ) {
 		return $ret;
 	}
 }
+
+
+if ( ! function_exists( 'gambit_is_spam' ) ) {
+	/**
+	 * Checks whether a given content is spam using Akismet's system.
+	 *
+	 * @param array $content Contains form input to be checked for spam.
+	 *
+	 * @return boolean True if Akismet tagged the given content as spam, false otherwise.
+	 */
+	function gambit_is_spam( $content ) {
+
+		// Innocent until proven guilty.
+		$is_spam = false;
+
+		// Contents are always an array. Make sure of that.
+		$content = (array) $content;
+
+		// Make sure Akismet is active before proceeding.
+		if ( function_exists( 'akismet_init' ) ) {
+
+			// Make sure we have the API key before proceeding.
+			$wpcom_api_key = get_option( 'wordpress_api_key' );
+			if ( ! empty( $wpcom_api_key ) ) {
+
+				global $akismet_api_host, $akismet_api_port;
+
+				// Set remaining required values for akismet api.
+				// @codingStandardsIgnoreLine
+				$content['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+				// @codingStandardsIgnoreLine
+				$content['referrer'] = $_SERVER['HTTP_REFERER'];
+				$content['blog'] = get_option( 'home' );
+
+				if ( empty( $content['referrer'] ) ) {
+					$content['referrer'] = get_permalink();
+				}
+
+				$query_string = '';
+
+				foreach ( $content as $key => $data ) {
+					if ( ! empty( $data ) ) {
+						$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
+					}
+				}
+
+				// Send it for analysis.
+				$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+
+				// If we have a hit, update statistics and send the bad news. Do nothing if it's clean.
+				if ( 'true' === $response[1] ) {
+					update_option( 'akismet_spam_count', get_option( 'akismet_spam_count' ) + 1 );
+					$is_spam = true;
+				}
+			}
+		}
+
+		return $is_spam;
+
+	}
+}
