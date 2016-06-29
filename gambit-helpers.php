@@ -183,3 +183,60 @@ if ( ! function_exists( 'gambit_get_ip' ) ) {
 		return $unique_ip;
 	}
 }
+
+
+if ( ! function_exists( 'gambit_get_all_taxonomies' ) ) {
+
+	/**
+	 * Pulls a list of taxonomies.
+	 *
+	 * @return array An array of post types and slugs usable in Titan Framework options.
+	 */
+	function gambit_get_all_taxonomies() {
+		$post_types = gambit_get_all_post_types( false );
+
+		$ret = array();
+		foreach ( $post_types as $post_type => $post_type_name ) {
+			$taxonomies = get_object_taxonomies( $post_type );
+
+			foreach ( $taxonomies as $taxonomy ) {
+				$taxonomy_object = get_taxonomy( $taxonomy );
+				$taxonomy_name = $taxonomy_object->label;
+				if ( ! empty( $taxonomy_object->labels->singular_name ) ) {
+					$taxonomy_name = $taxonomy_object->labels->singular_name;
+				}
+
+				$terms = get_terms( $taxonomy, array(
+					'parent' => 0,
+					'hide_empty' => false,
+				) );
+
+				if ( is_wp_error( $terms ) || empty( $terms ) ) {
+					continue;
+				}
+
+				foreach ( $terms as $term ) {
+					$ret[ $term->term_id ] = $term->name . ' (' . $post_type_name . ' &middot; ' . $taxonomy_name . ')';
+				}
+
+				// Child terms aren't outputted by get_terms, we'll need to get the child terms individually.
+				foreach ( $terms as $term ) {
+					$term_children = get_term_children( $term->term_id, $taxonomy );
+
+					if ( is_wp_error( $term_children ) || empty( $term_children ) ) {
+						continue;
+					}
+
+					foreach ( $term_children as $term_child_id ) {
+
+						// @codingStandardsIgnoreLine
+						$term_child = get_term_by( 'id', $term_child_id, $taxonomy );
+
+						$ret[ $term_child_id ] = $term->name . ' &rarr; ' . $term_child->name . ' (' . $post_type_name . ' &middot; ' . $taxonomy_name . ')';
+					}
+				}
+			}
+		}
+		return $ret;
+	}
+}
