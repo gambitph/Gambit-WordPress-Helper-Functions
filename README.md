@@ -30,4 +30,4 @@ Use it:
 | `gambit_hex_to_rgb($hex)` | `array` | Converts a hex color `#ffffff` or `#fff` to rgb `array(255,255,255)` |
 | `gambit_hex_to_rgba($hex, $opacity=1.0)` | `string` | Converts a hex color `#ffffff` or `#fff` and an opacity value `1.0` to an rgba string `rgba(255,255,255,1.0)` |
 | `gambit_get_ip()` | `string` | Gets the current IP address of the visitor |
-| `gambit_is_spam($content)` | `boolean` | Checks whether a given content is spam using Akismet's system. Returns `true` if Akismet tagged the given content as spam, `false` otherwise. |
+| `gambit_is_spam($content)` | `boolean` | Checks whether a given content is spam using Akismet's system. Returns `true` if Akismet tagged the given content as spam, `false` otherwise. Requires Akismet. If it isn't installed, this always returns `false`. |
