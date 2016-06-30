@@ -370,3 +370,79 @@ if ( ! function_exists( 'gambit_is_spam' ) ) {
 
 	}
 }
+
+
+if ( ! function_exists( 'gambit_get_video_provider' ) ) {
+
+	/**
+	 * Gets the Video ID & Provider from a video URL or ID. Supports only YouTube and Vimeo.
+	 *
+	 * @param string $video_string The URL or ID of a video.
+	 *
+	 * @return array An array whether the video is a YouTube or Vimeo video along with the video ID.
+	 */
+	function gambit_get_video_provider( $video_string ) {
+
+		$video_string = trim( $video_string );
+
+		/*
+		 * Check for YouTube.
+		 */
+		$video_id = false;
+		if ( preg_match( '/youtube\.com\/watch\?v=([^\&\?\/]+)/', $video_string, $id ) ) {
+			if ( count( $id > 1 ) ) {
+				$video_id = $id[1];
+			}
+		} else if ( preg_match( '/youtube\.com\/embed\/([^\&\?\/]+)/', $video_string, $id ) ) {
+			if ( count( $id > 1 ) ) {
+				$video_id = $id[1];
+			}
+		} else if ( preg_match( '/youtube\.com\/v\/([^\&\?\/]+)/', $video_string, $id ) ) {
+			if ( count( $id > 1 ) ) {
+				$video_id = $id[1];
+			}
+		} else if ( preg_match( '/youtu\.be\/([^\&\?\/]+)/', $video_string, $id ) ) {
+			if ( count( $id > 1 ) ) {
+				$video_id = $id[1];
+			}
+		}
+
+		if ( ! empty( $video_id ) ) {
+			return array(
+				'type' => 'youtube',
+				'id' => $video_id,
+			);
+		}
+
+		/*
+		 * Check for Vimeo.
+		 */
+		if ( preg_match( '/vimeo\.com\/(\w*\/)*(\d+)/', $video_string, $id ) ) {
+			if ( count( $id > 1 ) ) {
+				$video_id = $id[ count( $id ) - 1 ];
+			}
+		}
+
+		if ( ! empty( $video_id ) ) {
+			return array(
+				'type' => 'vimeo',
+				'id' => $video_id,
+			);
+		}
+
+		/*
+		 * Non-URL form.
+		 */
+		if ( preg_match( '/^\d+$/', $video_string ) ) {
+			return array(
+				'type' => 'vimeo',
+				'id' => $video_string,
+			);
+		}
+
+		return array(
+			'type' => 'youtube',
+			'id' => $video_string,
+		);
+	}
+}
