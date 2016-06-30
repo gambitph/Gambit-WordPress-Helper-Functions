@@ -31,4 +31,4 @@ Use it:
 | `gambit_hex_to_rgba($hex, $opacity=1.0)` | `string` | Converts a hex color `#ffffff` or `#fff` and an opacity value `1.0` to an rgba string `rgba(255,255,255,1.0)` |
 | `gambit_get_ip()` | `string` | Gets the current IP address of the visitor |
 | `gambit_is_spam($content)` | `boolean` | Checks whether a given content is spam using Akismet's system. Returns `true` if Akismet tagged the given content as spam, `false` otherwise. Requires Akismet. If it isn't installed, this always returns `false`. |
-| `gambit_get_video_provider($video_string)` | `array` | Gets the Video ID & Provider (whether YouTube or Vimeo) from a video URL or ID. Supports only YouTube and Vimeo. |
+| `gambit_get_video_provider($video_string)` | `array` | Gets the Video ID & Provider (whether YouTube or Vimeo) from a video URL or ID. Supports only YouTube and Vimeo. E.g. Converts `https://www.youtube.com/watch?v=dQw4w9WgXcQ` to `array('type'=>'youtube', 'id'=>'dQw4w9WgXcQ')` |
